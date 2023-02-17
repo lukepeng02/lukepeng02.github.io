@@ -20,38 +20,67 @@
     <li>technologists</li>
     <li>thinkers</li>
     <li>builders</li>
+    <li>4L13N5</li>
     </ul>
 
     <p>working together…</p>
-    <py-script src="./main.py"></py-script>
-    <py-script>
-     from js import document, alert
-    
-    def fahr(cel):
-        return (float(cel) *(9/5)) + 32
-            
-    def convert(*ags, **kws):
-        celsius = document.getElementById('celsius').value
-        result = fahr(celsius)
-        pyscript.write("Fahrenheit", result)    
-    </py-script>    
-  
-      <div class="container">
-          
-          <h1 class="text-center">
-              Celsius to Fahrenheit Converter
-          </h1>
-          <br />
-          <p><h3>Enter Temperature in Celsius:</h3>
-          <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" /></p>
-          <button id="convert" type="submit"  class="btn btn-info" py-click="convert">Convert</button>
 
-          
-          <p>
-          <h4>Result:</h4>
-          <textarea id="Fahrenheit" class="form-control" rows="2" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Result"></textarea></p>
-      
-          
-      </div>    
+    <!-- py-script src="main.py"></py-script -->
+    <py-config>
+      packages = ["numpy", "matplotlib"]
+    </py-config>
+
+    <py-script>
+from js import document, alert
+import numpy as np
+import matplotlib.pyplot as plt
+    
+def fahr(cel):
+  try:
+    f = float(cel)
+  except ValueError:
+    return "Not a number!"
+  return float(cel) * (9/5) + 32
+        
+def convert(*args, **kwargs):
+  celsius = document.getElementById('celsius').value
+  result = fahr(celsius)
+  pyscript.write("Fahrenheit", result)
+
+def rand_plot():
+  plt.clf()
+  x = np.random.rand(100)
+  y = np.random.rand(100)
+  plt.scatter(x, y)
+  display(plt, target="matplotlib-bar", append = False)
+
+    </py-script>
+  
+    <div class="container">
+
+      <h2 class="text-center">Celsius to Fahrenheit Converter</h2>
+      <h3>Enter Temperature in Celsius:</h3>
+      <p>
+        <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" />
+      </p>
+      <button id="convert" type="submit"  class="btn btn-info" py-click="convert()">Convert</button>
+
+      <h3>Result:</h3>
+      <p><label id='Fahrenheit'></label></p>
+
+      <button id="ppprint" type="submit"  class="btn btn-info" py-click="rand_plot()">LaTeX</button>
+      <div id="matplotlib-bar"></div>
+
+    
+    </div>
+    <py-script>
+      i = 0
+      def display_hello():
+          global i
+          display(i, target="helloDiv", append = False)
+          i += 1
+  </py-script>
+  <div id="helloDiv"></div>
+  <button id="my-button" py-onClick="display_hello()">Click me</button>
   </body>
 </html>
