@@ -25,18 +25,18 @@
     <p>working together…</p>
     <py-script src="./main.py"></py-script>
     <py-script>
-      from js import document,alert
-  
-  def farh(cel):
-      return (float(cel) *(9/5)) + 32
-          
-      
-  def convert(*ags, **kws):
-      
-      celsius = document.getElementById('celsius').value;
-      result= farh(celsius)
-      pyscript.write("Fahrenheit",result)    
-  </py-script>    
+     from js import document,alert
+    
+    def farh(cel):
+        return (float(cel) *(9/5)) + 32
+            
+        
+    def convert(*ags, **kws):
+        
+        celsius = document.getElementById('celsius').value;
+        result= farh(celsius)
+        pyscript.write("Fahrenheit",result)    
+    </py-script>    
   
       <div class="container">
           
@@ -46,10 +46,8 @@
           <br />
           <p><h3>Enter Temp in Calsius number:</h3>
           <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" /></p>
-          <center>
-              <button id="convert" type="submit"  class="btn btn-info" pys-onClick="convert">Convert</button>
-  
-          </center>
+            <button id="convert" type="submit"  class="btn btn-info" pys-onClick="convert">Convert</button>
+
           
           <p>
           <h4>Result:</h4>
