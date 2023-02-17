@@ -27,13 +27,13 @@
     <py-script>
      from js import document, alert
     
-    def farh(cel):
+    def fahr(cel):
         return (float(cel) *(9/5)) + 32
             
     def convert(*ags, **kws):
         celsius = document.getElementById('celsius').value
-        result= farh(celsius)
-        pyscript.write("Fahrenheit",result)    
+        result = fahr(celsius)
+        pyscript.write("Fahrenheit", result)    
     </py-script>    
   
       <div class="container">
@@ -42,9 +42,9 @@
               Celsius to Fahrenheit Converter
           </h1>
           <br />
-          <p><h3>Enter Temp in Calsius number:</h3>
+          <p><h3>Enter Temperature in Celsius:</h3>
           <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" /></p>
-            <button id="convert" type="submit"  class="btn btn-info" py-click="convert">Convert</button>
+          <button id="convert" type="submit"  class="btn btn-info" py-click="convert">Convert</button>
 
           
           <p>
