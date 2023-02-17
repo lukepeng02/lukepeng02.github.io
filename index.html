@@ -25,22 +25,37 @@
     <p>working together…</p>
     <py-script src="./main.py"></py-script>
     <py-script>
-      from js import console
-      
-      def my_function(*args, **kwargs):
-      
-          #print('args:', args)
-          #print('kwargs:', kwargs)
-      
-          console.log(f'args: {args}')
-          console.log(f'kwargs: {kwargs}')
+      from js import document,alert
+  
+  def farh(cel):
+      return (float(cel) *(9/5)) + 32
           
-          text = Element('test-input').element.value
       
-          #print('text:', text)
-          console.log(f'text: {text}')
+  def convert(*ags, **kws):
       
-          Element('test-output').element.innerText = text
-      </py-script>
+      celsius = document.getElementById('celsius').value;
+      result= farh(celsius)
+      pyscript.write("Fahrenheit",result)    
+  </py-script>    
+  
+      <div class="container">
+          
+          <h1 class="text-center">
+              Celsius to Fahrenheit Converter
+          </h1>
+          <br />
+          <p><h3>Enter Temp in Calsius number:</h3>
+          <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" /></p>
+          <center>
+              <button id="convert" type="submit"  class="btn btn-info" pys-onClick="convert">Convert</button>
+  
+          </center>
+          
+          <p>
+          <h4>Result:</h4>
+          <textarea id="Fahrenheit" class="form-control" rows="2" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Result"></textarea></p>
+      
+          
+      </div>    
   </body>
 </html>
