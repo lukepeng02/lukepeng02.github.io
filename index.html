@@ -9,78 +9,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
-    <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          renderMathInElement(document.body, {
+            // customised options
+            // • auto-render specific keys, e.g.:
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '\\[', right: '\\]', display: true}
+            ],
+            // • rendering keys, e.g.:
+            throwOnError : false
+          });
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"></script>
+    <script src="quiz.js" defer></script>
+  </head>
   </head>
   <body>
-    <h1>charmander</h1>
-    <img src="images/charmander.png" alt="testing" />
-    <p>At Mozilla, we're a global community of</p>
-
-    <ul>
-    <li>technologists</li>
-    <li>thinkers</li>
-    <li>builders</li>
-    <li>4L13N5</li>
-    </ul>
-
-    <p>working together…</p>
-
-    <!-- py-script src="main.py"></py-script -->
-    <py-config>
-      packages = ["numpy", "matplotlib"]
-    </py-config>
-
-    <py-script>
-from js import document, alert
-import numpy as np
-import matplotlib.pyplot as plt
-    
-def fahr(cel):
-  try:
-    f = float(cel)
-  except ValueError:
-    return "Not a number!"
-  return float(cel) * (9/5) + 32
-        
-def convert(*args, **kwargs):
-  celsius = document.getElementById('celsius').value
-  result = fahr(celsius)
-  pyscript.write("Fahrenheit", result)
-
-def rand_plot():
-  plt.clf()
-  x = np.random.rand(100)
-  y = np.random.rand(100)
-  plt.scatter(x, y)
-  display(plt, target="matplotlib-bar", append = False)
-
-    </py-script>
-  
-    <div class="container">
-
-      <h2 class="text-center">Celsius to Fahrenheit Converter</h2>
-      <h3>Enter Temperature in Celsius:</h3>
-      <p>
-        <input id="celsius" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Enter Temp in Celsius" />
-      </p>
-      <button id="convert" type="submit"  class="btn btn-info" py-click="convert()">Convert</button>
-
-      <h3>Result:</h3>
-      <p><label id='Fahrenheit'></label></p>
-
-      <button id="ppprint" type="submit"  class="btn btn-info" py-click="rand_plot()">LaTeX</button>
-      <div id="matplotlib-bar"></div>
-
-    
-    </div>
-    <py-script>
-      i = 0
-      def display_hello():
-          global i
-          display(i, target="helloDiv", append = False)
-          i += 1
-  </py-script>
-  <div id="helloDiv"></div>
-  <button id="my-button" py-onClick="display_hello()">Click me</button>
+    <h1>Stat Quiz!</h1>
+    <div id="quiz"></div>
+    <button id="submit">Get Results</button>
+    <div id="results"></div>
+    <div id="test"></div>
   </body>
 </html>
