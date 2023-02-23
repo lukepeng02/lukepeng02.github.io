@@ -40,6 +40,10 @@ img {
     margin-bottom: 20px;
     font-size: 15px;
 }
+.nav-item {
+    font-size: 30 px;
+}
+
 #results {
     margin-bottom: 20px;
     font-size: 15px;
