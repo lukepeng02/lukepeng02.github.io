@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>My test page</title>
+    <title>STAT 400 Practice</title>
     <link href="styles/style.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,14 +30,27 @@
       });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.5.1/math.js"></script>
-    <script src="quiz.js" defer></script>
+    <script src="scripts/string_parser.js"></script>
+    <script src="scripts/quiz.js" defer></script>
+    <script src="scripts/collapsible.js" defer></script>
   </head>
   </head>
   <body>
-    <h1>Stat Quiz!</h1>
+    <h1>Stat 400 Practice</h1>
+    <label for="qtype">Choose a topic:</label>
+    <select name="qtype" id="qtype">
+        <option value="prob">General Probability</option>
+        <option value="ddist">Discrete Distributions</option>
+        <option value="cdist">Continuous Distributions</option>
+    </select>
     <div id="quiz"></div>
-    <button id="submit">Get Results</button>
-    <div id="results"></div>
-    <div id="test"></div>
+    <div id="res">
+        <button id="submit">Check Answer</button>
+        <div id="results"></div>
+    </div>
+    <button type="button" class="collapsible">Show Solution</button>
+    <div class="solns" id="solns">
+        <p>LOL, of course there are no solutions!</p>
+    </div>
   </body>
 </html>

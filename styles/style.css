@@ -27,31 +27,44 @@ body {
     padding: 0 20px 20px 20px;
 }
 
-img {
-    display: block;
-    margin: 0 auto;
+label {
+    font-size: 20px;
+    margin-right: 5px;
 }
 
 .question {
 	font-weight: 600;
     font-size: 20px;
+    margin-bottom: 30px;
 }
 .answers {
     margin-bottom: 20px;
     font-size: 15px;
 }
-.nav-item {
-    font-size: 30 px;
-}
 
 #results {
+    height: 55px;
+    width: 150px;
     margin-bottom: 20px;
-    font-size: 15px;
+    font-size: 20px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
 }
+.incRes {
+    background-color: rgb(248, 88, 88);
+}
+
 .abox {
-    margin-left: 10px;
+    height: 120%;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px 10px;
 }
-#submit{
+#submit {
 	font-family: sans-serif;
 	font-size: 20px;
 	background-color: #297;
@@ -64,4 +77,53 @@ img {
 }
 #submit:hover{
 	background-color: #3a8;
+}
+
+#qtype {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#res {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.collapsible {
+    background-color: #f6d076;
+    color: #444444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+}
+
+.active, .collapsible:hover {
+    background-color: #f5b731;
+}
+  
+  /* Style the collapsible content. Note: hidden by default */
+.solns {
+    padding: 0 18px;
+    background-color: rgb(248, 242, 189);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.collapsible:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
