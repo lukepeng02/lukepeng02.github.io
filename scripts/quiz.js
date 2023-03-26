@@ -27,6 +27,22 @@ var questions = [
     {
         prob: "Kayla has 3 million dollars in 2019. She doubles it by 2022. How many millions does she have in 2022?",
         answer: "6"
+    },
+    {
+        prob: "What is the value of \\(e^\{a\}\\)?",
+        answer: "exp(a)",
+        vars: {
+            "a": "randint(1,4)"
+        },
+        solution: "Use a calculator, n00b!"
+    },
+    {
+        prob: "What is the value of \\({a}!\\)?",
+        answer: "factorial(a)",
+        vars: {
+            "a": "randint(1,4)"
+        },
+        solution: "Use a calculator, n00b!"
     }
 ]
 
