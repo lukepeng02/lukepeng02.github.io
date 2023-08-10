@@ -78,16 +78,6 @@ var solutionContainer = document.getElementById('solns');
 var solutionButton = document.getElementById('soln-col');
 var questionChoiceDropdown = document.getElementById('qtype');
 
-var opts = {
-    delimiters: [
-        {left: '$$', right: '$$', display: true},
-        {left: '$', right: '$', display: false},
-        {left: '\\(', right: '\\)', display: false},
-        {left: '\\[', right: '\\]', display: true}
-    ],
-    throwOnError : false
-};
-
 function resetBox(element) {
     element.innerHTML = "";
     element.style.backgroundColor = "#FFFFFF";

@@ -127,3 +127,37 @@ label {
 .active:after {
     content: "\2796"; /* Unicode character for "minus" sign (-) */
 }
+
+.grow {
+    padding: 42px 32px;
+    border-radius: 10px;
+    height: 49px;
+    width: 100%;
+    margin: 30px 0% 5px 0%;
+    float: left;
+    position: relative;
+    transition: all ease-in-out 0.6s;
+    transition: all ease-in-out 0.6s;
+    overflow: hidden;
+    clip-path: circle(4.5% at 5% 18%);
+    cursor: pointer;
+}
+.grow:hover {
+    height: 460px;
+    clip-path: circle(75%);
+    border-radius: 20px;
+    box-shadow: 5px 8px 30px rgba(0,0,0,0.5);
+}
+
+#infocon {
+    position: absolute;
+    top: -5px;
+    left: 2.75%;
+    font-size: 3.6em;
+    color: #000000;
+    transition: ease-out 0.3s;
+}
+
+#guidelines {
+    background-color: rgb(198, 173, 254);
+}
