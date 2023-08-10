@@ -1,66 +1,19 @@
-var questions = [
-    {
-        prob: "A happy kid eats an average of {a} Twix bars and {b} M&Ms each day. How many candies in total does he eat each week?",
-        answer: "7*(a+b)",
-        vars: {
-            "a": "randint(1,4)", 
-            "b": "randint(3,7)", 
-        },
-        solution: "The answer is {ans}. No explanation necessary here!"
-    },
-    {
-        prob: "Hank drinks water according to a Poisson process of \\(\\lambda={a}\\) cups per day. What is the variance of this?",
-        answer: "a",
-        vars: {
-            "a": "randint(1,4)", 
-        },
-        solution: "The variance of a Poisson distribution is equal to the mean \\(\\lambda\\), which is {ans}."
-    },
-    {
-        prob: "What is \\(3\\times {a}\\)?",
-        answer: "a+a+a",
-        vars: {
-            "a": "randuni(0,1,2)"
-        },
-        solution: "{ans}"
-    },
-    {
-        prob: "Kayla has 3 million dollars in 2019. She doubles it by 2022. How many millions does she have in 2022?",
-        answer: "6"
-    },
-    {
-        prob: "What is the value of \\(e^\{a\}\\)?",
-        answer: "exp(a)",
-        vars: {
-            "a": "randint(1,4)"
-        },
-        solution: "Use a calculator, n00b!"
-    },
-    {
-        prob: "What is the value of \\({a}!\\)?",
-        answer: "factorial(a)",
-        vars: {
-            "a": "randint(1,4)"
-        },
-        solution: "Use a calculator, n00b!"
-    }
-]
-
-var happyEmojis = ["😀", "😁", "😇", "😎", "🤑"];
-var sadEmojis = ["😠", "😥", "😦", "😳", "🤡"];
-
 function generateQuiz(questions, quizContainer, resultsContainer, solutionContainer, submitButton) {
     
     function parseQuestion(dict) {
-        var parsed_vars = "vars" in dict ? parseRand(dict["vars"]) : {};
-        var parsed_prob = template(dict["prob"], parsed_vars);
-        var answer = smartRound(math.evaluate(dict["answer"], parsed_vars));
+        let parsed_vars = "vars" in dict ? parseVars(dict["vars"]) : {}; // turn variables with random values into numeric values
+        let parsed_prob = template(dict["prob"], parsed_vars); // substitute variables in the question for their generated values
 
-        var soln_dict = {ans: answer}
-        var parsed_soln = "solution" in dict ? template(dict["solution"], soln_dict) : "No solution attached!";
+        let raw_ans = template(dict["answer"], parsed_vars); // substitute variables in the answer for their generated values
+        raw_ans = parseStats(raw_ans); // parse distributions in question if they exist
+        raw_ans = math.evaluate(raw_ans, parsed_vars); // generate the numeric answer by parsing the variable expression 
+        let answer = [raw_ans, smartRound(raw_ans)];
+
+        let soln_dict = Object.assign({}, parsed_vars, {ans: answer[1]});
+        let parsed_soln = "solution" in dict ? parseSolution(dict["solution"], soln_dict) : "No solution attached!";
         return {
             question: parsed_prob,
-            correctAnswer: answer,
+            correctAnswers: answer,
             soln: parsed_soln
         }
     }
@@ -79,16 +32,16 @@ function generateQuiz(questions, quizContainer, resultsContainer, solutionContai
 
 	function showResults(question, quizContainer, resultsContainer) {
         // gather answer containers from our quiz
-        var answerContainer = quizContainer.querySelectorAll('.answers')[0]
+        let answerContainer = quizContainer.querySelectorAll('.answers')[0]
     
         // find user's answer
-        var userAnswer = (answerContainer.querySelector('input[name=question]') || {}).value;
+        let userAnswer = (answerContainer.querySelector('input[name=question]') || {}).value;
 
-        var msg;
-        var resultsColor;
+        let msg;
+        let resultsColor;
 
         // if answer is correct
-        if (isCorrect(userAnswer, question.correctAnswer)) {
+        if (isCorrect(userAnswer, question.correctAnswers[0]) || isCorrect(userAnswer, question.correctAnswers[1])) {
             // color the answer green
             resultsColor = '#63F49B';
             msg = "Correct! " + randomChoice(happyEmojis);
@@ -105,9 +58,8 @@ function generateQuiz(questions, quizContainer, resultsContainer, solutionContai
         resultsContainer.style.backgroundColor = resultsColor;
     }
 
-    var question = randomChoice(questions);
-
-    var qDict = parseQuestion(question);
+    let question = randomChoice(questions);
+    let qDict = parseQuestion(question);
 
 	// show the questions
 	showQuestions(qDict, quizContainer)
@@ -123,7 +75,43 @@ var resultsContainer = document.getElementById('results');
 var submitButton = document.getElementById('submit');
 var solutionContainer = document.getElementById('solns');
 
-generateQuiz(questions, quizContainer, resultsContainer, solutionContainer, submitButton);
+var solutionButton = document.getElementById('soln-col');
+var questionChoiceDropdown = document.getElementById('qtype');
+
+var opts = {
+    delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+    ],
+    throwOnError : false
+};
+
+function resetBox(element) {
+    element.innerHTML = "";
+    element.style.backgroundColor = "#FFFFFF";
+}
+
+var questions = prob_questions;
+
+function makeQuiz() {
+    generateQuiz(questions, quizContainer, resultsContainer, solutionContainer, submitButton);
+    collapse(solutionButton);
+    resetBox(resultsContainer);
+    renderMathInElement(document.body, opts); // render KaTeX for every question
+}
+
+function chooseQType() {
+    var qt_choice = questionChoiceDropdown.value;
+    questions = qtype_to_var[qt_choice];
+    makeQuiz();
+}
+questionChoiceDropdown.onchange = chooseQType;
+
+makeQuiz();
+document.getElementById("new-q").onclick = makeQuiz;
+
 
 
 // node quiz.js
