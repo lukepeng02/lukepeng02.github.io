@@ -21,7 +21,7 @@ function generateQuiz(questions, quizContainer, resultsContainer, solutionContai
 	function showQuestions(question, quizContainer) {
         // add an html text box
         var answer = '<label>'
-                + '<input type="text" name="question" class="abox" placeholder="Your answer here">'
+                + '<input type="text" name="question" class="abox" placeholder="Your answer here" style="width: 90%">'
             + '</label>'
     
         // combine our output list into one string of html and put it on the page
