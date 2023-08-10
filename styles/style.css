@@ -152,7 +152,7 @@ label {
 #infocon {
     position: absolute;
     top: -3px;
-    left: 2.65%;
+    left: 16px;
     font-size: 3.6em;
     transition: ease-out 0.3s;
 }
