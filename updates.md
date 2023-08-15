@@ -6,3 +6,4 @@ Created by Luke Peng
 - Added dynamic JS/CSS elements (quiz, solutions tab, info "button") using online guides
 - Populated quiz with 50 probability questions
 - Added logic for parsing variables with random values
+- Created updates.md and contents.md files
