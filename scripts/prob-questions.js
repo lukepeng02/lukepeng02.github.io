@@ -311,6 +311,260 @@ var prob_questions = [
             "\\(0\\leq x\\leq {a},0\\leq y\\leq {b},0\\leq z\\leq {c}\\). We want the volume of the tetrahedron bounded by the planes \\(x=0,y=0,z=0,\\) and \\(x+y+z<{e}\\). This is simply \\({e}^3/6\\). " +
             "The probability the assignment is cancelled is the ratio of the volume of this tetrahedron to that of the rectangular prism."
     },
+    {
+        prob: "In an infinite apple orchard, {b}% of all apples are green. If I pick {c}, what is the probability at most one is green?",
+        answer: "pow(1-a/10,c)+c*a/10*pow(1-a/10,c-1)",
+        vars: {
+            "a": "randint(1,9)",
+            "b": "meval(10*a)",
+            "c": "randint(3,5)",
+        },
+        solution: "We can have either 0 or 1 green apple. The probability none are green is \\(@meval(round(1-{a}/10,1)@)^{c}\\), and the probability one is green is \\(\\binom\{{c}\}1 (@meval(round({a}/10,1)@))(@meval(round(1-{a}/10,1)@))^@meval({c}-1@)\\)."
+    },
+    {
+        prob: "In an infinite apple orchard, {b}% of all apples are green. What is the probability that I first pick {d} green ones, and then {c} non-green ones?",
+        answer: "pow(a/10,d)*pow(1-a/10,c)",
+        vars: {
+            "a": "randint(1,9)",
+            "b": "meval(10*a)",
+            "c": "randint(3,5)",
+            "d": "randint(2,4)"
+        },
+        solution: "The probability the first {d} are green is \\(@meval(round({a}/10,1)@)^{d}\\), and the probability the next {c} are not is \\(@meval(round(1-{a}/10,1)@)^{c}\\). (What do you do with these two probabilities?)"
+    },
+    {
+        prob: "In an infinite apple orchard, {b}% of all apples are green. If I pick {c}, what is the probability none are green, given at most 1 is green?",
+        answer: "pow(1-a/10,c)/(pow(1-a/10,c)+c*a/10*pow(1-a/10,c-1))",
+        vars: {
+            "a": "randint(1,9)",
+            "b": "meval(10*a)",
+            "c": "randint(3,5)",
+            "d": "randint(2,4)"
+        },
+        solution: "The probability none are green is \\(@meval(round(1-{a}/10,1)@)^{c}\\), and the probability one is green is \\(\\binom\{{c}\}1(@meval(round({a}/10,1)@))(@meval(round(1-{a}/10,1)@))^@meval({c}-1@)\\). We can find the " +
+            "probability at most 1 is green by adding these two values. (What should we do at the end?)"
+    },
+    {
+        prob: "An urn has {a} red and {b} green marbles. If I pick {d} with replacement, find the probability there are {c} of each color.",
+        answer: "combinations(d,c)*pow(a/(a+b),c)*pow(b/(a+b),c)",
+        vars: {
+            "a": "randint(10,19)",
+            "b": "randint(10,19)",
+            "c": "randint(3,5)",
+            "d": "meval(2*c)"
+        },
+        solution: "The probability of getting {c} red marbles is \\((\\frac\{{a}\}\{{a}+{b}\})^{c}\\), and the probability of getting {c} green marbles is \\((\\frac\{{b}\}\{{a}+{b}\})^{c}\\). Furthermore, there are \\(\\binom\{d\}{c}\\) ways to order the marbles."
+    },
+    {
+        prob: "An urn has {a} red and {b} green marbles. If I pick {e} with replacement, find the probability there are {c} reds and {d} greens.",
+        answer: "combinations(e,c)*pow(a/(a+b),c)*pow(b/(a+b),d)",
+        vars: {
+            "a": "randint(10,12)",
+            "b": "randint(15,19)",
+            "c": "randint(3,5)",
+            "d": "randint(6,8)",
+            "e": "meval(c+d)"
+        },
+        solution: "The probability of getting {c} red marbles is \\((\\frac\{{a}\}\{{a}+{b}\})^{c}\\), and the probability of getting {c} green marbles is \\((\\frac\{{b}\}\{{a}+{b}\})^{d}\\). Furthermore, there are \\(\\binom\{{e}\}{c}\\) ways to order the marbles."
+    },
+    {
+        prob: "An urn has {a} red and {b} green marbles. If I pick {e} without replacement, find the probability there are {c} reds and {d} greens.",
+        answer: "combinations(a,c)*combinations(b,d)/combinations(f,e)",
+        vars: {
+            "a": "randint(15,19)",
+            "b": "randint(15,19)",
+            "c": "randint(6,8)",
+            "d": "randint(6,8)",
+            "e": "meval(c+d)",
+            "f": "meval(a+b)"
+        },
+        solution: "There are \\(\\binom\{{a}\}\{{c}\}\\) ways to pick {c} reds from {a}, and \\(\\binom\{{b}\}\{{d}\}\\) ways to pick {d} greens from {b}. Furthermore, there are \\(\\binom\{{f}\}\{{e}\}\\) ways to pick {e} marbles from {f}."
+    },
+    {
+        prob: "An urn has {a} red, {b} green, and {c} blue marbles. If I pick {h} without replacement, find the probability there are {d} reds, {e} greens, and {f} blues.",
+        answer: "combinations(a,d)*combinations(b,e)*combinations(c,f)/combinations(g,h)",
+        vars: {
+            "a": "randint(15,19)",
+            "b": "randint(15,19)",
+            "c": "randint(15,19)",
+            "d": "randint(6,8)",
+            "e": "randint(6,8)",
+            "f": "randint(6,8)",
+            "g": "meval(a+b+c)",
+            "h": "meval(d+e+f)"
+        },
+        solution: "There are \\(\\binom\{{a}\}\{{d}\}\\) ways to pick {d} reds from {a}, \\(\\binom\{{b}\}\{{e}\}\\) ways to pick {e} greens from {b}, and \\(\\binom\{{c}\}\{{f}\}\\) ways to pick {f} blues from {c}. " +
+            "Furthermore, there are \\(\\binom\{{g}\}\{{h}\}\\) ways to pick {h} marbles from {g}."
+    },
+    {
+        prob: "An urn has {a} red, {b} green, and {c} blue marbles. If I pick {h} with replacement, find the probability there are {d} reds, {e} greens, and {f} blues.",
+        answer: "factorial(h)/(factorial(d)*factorial(e)*factorial(f))*pow(a/g,d)*pow(b/g,e)*pow(c/g,f)",
+        vars: {
+            "a": "randint(15,19)",
+            "b": "randint(15,19)",
+            "c": "randint(15,19)",
+            "d": "randint(6,8)",
+            "e": "randint(6,8)",
+            "f": "randint(6,8)",
+            "g": "meval(a+b+c)",
+            "h": "meval(d+e+f)"
+        },
+        solution: "The probability of getting {d} red marbles is \\((\\frac\{{a}\}\{{a}+{b}+{c}\})^{d}\\), that of getting {e} green marbles is \\((\\frac\{{b}\}\{{a}+{b}+{c}\})^{e}\\), and that of getting {f} blue marbles " +
+            "is \\((\\frac\{{c}\}\{{a}+{b}+{c}\})^{f}\\). Furthermore, there are \\(\\frac\{{h}!\}\{{d}!{e}!{f}!\}\\) ways to order this outcome."
+    },
+    {
+        prob: "An infinite apple orchard has @meval(10*{a}@)% blue, @meval(10*{c}@)% green, and @meval(10*{d}@)% yellow apples. If I pick @meval({e}+{f}+{g}@) at random, what " +
+            "is the probability I end up with {e} blues, {f} greens, and {g} yellows?",
+        answer: "factorial(e+f+g)/(factorial(e)*factorial(f)*factorial(g))*pow(a/10,e)*pow(c/10,f)*pow(d/10,g)",
+        vars: {
+            "a": "randint(1,6)", // blue proportion
+            "b": "meval(9-a)",
+            "c": "randint(1,{b})", // green proportion
+            "d": "meval(10-a-c)", // yellow proportion,
+            "e": "randint(3,6)",
+            "f": "randint(3,6)",
+            "g": "randint(3,6)",
+        },
+        solution: "The probability of getting {e} blue apples is \\(0.{a}^\{{e}\}\\), that of getting {f} green apples is \\(0.{c}^\{{f}\}\\), and that of getting {g} yellow apples " +
+        "is \\(0.{d}^\{{g}\}\\). Furthermore, there are \\(\\frac\{@meval({e}+{f}+{g}@)!\}\{{e}!{f}!{g}!\}\\) ways to order this outcome."
+    },
+    {
+        prob: "An infinite apple orchard has @meval(10*{a}@)% blue, @meval(10*{c}@)% green, and @meval(10*{d}@)% yellow apples. If I pick {e} at random, what " +
+            "is the probability (exactly) {g} are green?",
+        answer: "combinations(e,g)*pow(c/10,g)*pow(1-c/10,e-g)",
+        vars: {
+            "a": "randint(1,6)", // blue proportion
+            "b": "meval(9-a)",
+            "c": "randint(1,{b})", // green proportion
+            "d": "meval(10-a-c)", // yellow proportion,
+            "e": "randint(6,10)",
+            "f": "meval(e-1)",
+            "g": "randint(2,{f})"
+        },
+        solution: "The probability of getting {g} green apples is \\(0.{c}^\{{g}\}\\), and the probability of getting @meval({e}-{g}@) non-green apples is \\(0.@meval(10-{c}@)^\{@meval({e}-{g}@)\}\\). " +
+        "Furthermore, there are \\(\\binom\{{e}\}\{{g}\}\\) ways to order this outcome."
+    },
+    {
+        prob: "An infinite apple orchard has @meval(10*{a}@)% blue, @meval(10*{c}@)% green, and @meval(10*{d}@)% yellow apples. If I keep picking until I get {e} greens, what " +
+            "is the probability it takes exactly {f} tries?",
+        answer: "combinations(f-1,e-1)*pow(c/10,e)*pow(1-c/10,f-e)",
+        vars: {
+            "a": "randint(1,6)", // blue proportion
+            "b": "meval(9-a)",
+            "c": "randint(1,{b})", // green proportion
+            "d": "meval(10-a-c)", // yellow proportion,
+            "e": "randint(2,5)",
+            "f": "meval(e+2)",
+            "g": "randint({f},10)"
+        },
+        solution: "In the first @meval({f}-1@) tries, we must get exactly @meval({e}-1@) green(s). The probability of this is \\(\\binom\{@meval({f}-1@)\}\{@meval({e}-1@)\}(@meval({c}/10@))^@meval({e}-1@)(@meval(({a}+{d})/10@))^@meval({f}-{e}@)\\). " +
+        "We then simply multiply this by the probability of getting a green apple (this represents the {f}th try)."
+    },
+    {
+        prob: "Consider an infinite pile of coins in which @meval(10*{a}@)% are counterfeit. If Al Capone takes 5 at random, find the probability exactly 3 are counterfeit, given at least 2 are.",
+        answer: "combinations(5,3)*pow(a/10,3)*pow(1-a/10,2)/(1-pow(1-a/10,5)-5*a/10*pow(1-a/10,4))",
+        vars: {
+            "a": "randint(1,4)", // counterfeit proportion
+        },
+        solution: "The probability exactly 3 are counterfeit is \\(\\binom53(0.{a})^3(0.@meval(10-{a}@))^2\\). The probability at least 2 are counterfeit is \\(1-(0.@meval(10-{a}@))^5-\\binom51(0.{a})^1(0.@meval(10-{a}@))^4.\\) " +
+            "(What should we do with these two numbers?)"
+    },
+    {
+        prob: "The probability David takes the bus when it is raining is {a}. The probability he takes the bus when it is clear is {b}. Suppose it rains on @meval(10*{c}@)% of all days. Find the probability is it raining, given that David " +
+            "is not taking the bus.",
+        answer: "e/(e+h)",
+        vars: {
+            "a": "randuni(0.6,0.9,2)", // P[bus | raining]
+            "b": "randuni(0.4,0.7,2)", // P[bus | not raining]
+            "c": "randint(1,4)", // raining prob * 10
+            "d": "meval(c/10*a)", // P[bus n raining]
+            "e": "meval(c/10-d)", // P[not bus n raining]
+            "f": "meval(10-c)", // not raining prob * 10
+            "g": "meval(f/10*b)", // P[bus n not raining]
+            "h": "meval(f/10-g)", // P[not bus n not raining]
+        },
+        solution: "Let \\(B\\) be the event of David taking the bus, and \\(R\\) be the event of it raining. With the given numbers, we can first find <ul> <li>\\(P[R^C]=1-P[R]\\)</li> <li>\\(P[B\\cap R]=P[B \\mid R]\\cdot P[R]\\)</li>" +
+        "<li>\\(P[B^C \\cap R]=P[R]-P[B\\cap R]\\)</li> <li>\\(P[B\\cap R^C]=P[B\\mid R^C]\\cdot P[R^C]\\)</li> <li>\\(P[B^C\\cap R^C]=P[R^C]-P[B\\cap R^C]\\)</li> <li>\\(P[B]=P[B\\cap R]+P[B\\cap R^C]\\)</li> <li>\\(P[B^C]=P[B^C\\cap R]+P[B^C\\cap R^C]\\)</li></ul>" +
+        "<p>From here, we know \\(P[R\\mid B^C]=P[R\\cap B^C]/P[B^C].\\)</p>"
+    },
+    {
+        prob: "The probability David takes the bus when it is raining is {a}. The probability he takes the bus when it is clear is {b}. Suppose it rains on @meval(10*{c}@)% of all days. Find the probability is it not raining, given that David " +
+            "is not taking the bus.",
+        answer: "h/(e+h)",
+        vars: {
+            "a": "randuni(0.6,0.9,2)", // P[bus | raining]
+            "b": "randuni(0.4,0.7,2)", // P[bus | not raining]
+            "c": "randint(1,4)", // raining prob * 10
+            "d": "meval(c/10*a)", // P[bus n raining]
+            "e": "meval(c/10-d)", // P[not bus n raining]
+            "f": "meval(10-c)", // not raining prob * 10
+            "g": "meval(f/10*b)", // P[bus n not raining]
+            "h": "meval(f/10-g)", // P[not bus n not raining]
+        },
+        solution: "Let \\(B\\) be the event of David taking the bus, and \\(R\\) be the event of it raining. With the given numbers, we can first find <ul> <li>\\(P[R^C]=1-P[R]\\)</li> <li>\\(P[B\\cap R]=P[B \\mid R]\\cdot P[R]\\)</li>" +
+        "<li>\\(P[B^C \\cap R]=P[R]-P[B\\cap R]\\)</li> <li>\\(P[B\\cap R^C]=P[B\\mid R^C]\\cdot P[R^C]\\)</li> <li>\\(P[B^C\\cap R^C]=P[R^C]-P[B\\cap R^C]\\)</li> <li>\\(P[B]=P[B\\cap R]+P[B\\cap R^C]\\)</li> <li>\\(P[B^C]=P[B^C\\cap R]+P[B^C\\cap R^C]\\)</li></ul>" +
+        "<p>From here, we know \\(P[R^C\\mid B^C]=P[R^C\\cap B^C]/P[B^C].\\)</p>"
+    },
+    {
+        prob: "The probability David takes the bus when it is raining is {a}. The probability he takes the bus when it is clear is {b}. Suppose it rains on @meval(10*{c}@)% of all days. Find the probability is it raining, given that David " +
+            "is taking the bus.",
+        answer: "d/(d+g)",
+        vars: {
+            "a": "randuni(0.6,0.9,2)", // P[bus | raining]
+            "b": "randuni(0.4,0.7,2)", // P[bus | not raining]
+            "c": "randint(1,4)", // raining prob * 10
+            "d": "meval(c/10*a)", // P[bus n raining]
+            "e": "meval(c/10-d)", // P[not bus n raining]
+            "f": "meval(10-c)", // not raining prob * 10
+            "g": "meval(f/10*b)", // P[bus n not raining]
+            "h": "meval(f/10-g)", // P[not bus n not raining]
+        },
+        solution: "Let \\(B\\) be the event of David taking the bus, and \\(R\\) be the event of it raining. With the given numbers, we can first find <ul> <li>\\(P[R^C]=1-P[R]\\)</li> <li>\\(P[B\\cap R]=P[B \\mid R]\\cdot P[R]\\)</li>" +
+        "<li>\\(P[B^C \\cap R]=P[R]-P[B\\cap R]\\)</li> <li>\\(P[B\\cap R^C]=P[B\\mid R^C]\\cdot P[R^C]\\)</li> <li>\\(P[B^C\\cap R^C]=P[R^C]-P[B\\cap R^C]\\)</li> <li>\\(P[B]=P[B\\cap R]+P[B\\cap R^C]\\)</li> <li>\\(P[B^C]=P[B^C\\cap R]+P[B^C\\cap R^C]\\)</li></ul>" +
+        "<p>From here, we know \\(P[R\\mid B]=P[R\\cap B]/P[B].\\)</p>"
+    },
+    {
+        prob: "The probability David takes the bus when it is raining is {a}. The probability he takes the bus when it is clear is {b}. Suppose it rains on @meval(10*{c}@)% of all days. Find the probability is it not raining, given that David " +
+            "is taking the bus.",
+        answer: "g/(d+g)",
+        vars: {
+            "a": "randuni(0.6,0.9,2)", // P[bus | raining]
+            "b": "randuni(0.4,0.7,2)", // P[bus | not raining]
+            "c": "randint(1,4)", // raining prob * 10
+            "d": "meval(c/10*a)", // P[bus n raining]
+            "e": "meval(c/10-d)", // P[not bus n raining]
+            "f": "meval(10-c)", // not raining prob * 10
+            "g": "meval(f/10*b)", // P[bus n not raining]
+            "h": "meval(f/10-g)", // P[not bus n not raining]
+        },
+        solution: "Let \\(B\\) be the event of David taking the bus, and \\(R\\) be the event of it raining. With the given numbers, we can first find <ul> <li>\\(P[R^C]=1-P[R]\\)</li> <li>\\(P[B\\cap R]=P[B \\mid R]\\cdot P[R]\\)</li>" +
+        "<li>\\(P[B^C \\cap R]=P[R]-P[B\\cap R]\\)</li> <li>\\(P[B\\cap R^C]=P[B\\mid R^C]\\cdot P[R^C]\\)</li> <li>\\(P[B^C\\cap R^C]=P[R^C]-P[B\\cap R^C]\\)</li> <li>\\(P[B]=P[B\\cap R]+P[B\\cap R^C]\\)</li> <li>\\(P[B^C]=P[B^C\\cap R]+P[B^C\\cap R^C]\\)</li></ul>" +
+        "<p>From here, we know \\(P[R^C\\mid B]=P[R^C\\cap B]/P[B].\\)</p>"
+    },
+    {
+        prob: "Alice, Bob, Carl, and Dan each pick a random integer (with equal probability) between 0 and 5, inclusive. Find the probability their sum is 8. ⭐",
+        answer: "125/pow(6,4)",
+        solution: "The answer is the number of ways their numbers can sum to 8, divided by the total number of possible outcomes. The latter is simply \\(6^4\\). To calculate the former, find all distinct cases of four numbers between 0 and 5 that sum to 8. " +
+            "(Hint: there should be 11 cases in total. Don't forget to count how many ways you can order each one as well.) "
+    },
+    {
+        prob: "Suppose I draw cards from a standard deck of 52 cards, without replacement, until I get a spade. Find the probability I draw {a} cards in total.",
+        answer: "combinations(39,a-1)/combinations(52,a-1)*13/(53-a)",
+        vars: {
+            "a": "randint(3,8)"  
+        },
+        solution: "The first @meval({a}-1@) cards must not be spades; there are \\(\\binom\{39\}\{@meval({a}-1@)\}\\) ways to choose @meval({a}-1@) cards from 39 non-spades, out of a total of \\(\\binom\{52\}\{@meval({a}-1@)\}\\) " +
+            "ways to choose @meval({a}-1@) cards from 52. Finally, the last card must be a spade. The probability of drawing one is \\(13/@meval(53-{a}@)\\)."
+    },
+    {
+        prob: "Suppose I draw cards from a standard deck of 52 cards, with replacement, until I get a spade. Find the probability I draw {a} cards in total.",
+        answer: "pow(3/4,a-1)/4",
+        vars: {
+            "a": "randint(3,8)"  
+        },
+        solution: "The first @meval({a}-1@) cards must not be spades; the probability of this occurring is \\((3/4)^@meval(a-1@)\\). " +
+            "Finally, the last card must be a spade. The probability of drawing one is \\(1/4\\)."
+    },
 ]
 
 var probq_id = "prob";

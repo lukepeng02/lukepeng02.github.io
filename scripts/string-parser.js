@@ -6,25 +6,6 @@ function template(string, obj) {
     return s;
 }
 
-function randomChoice(list) {
-    return list[Math.floor(Math.random() * list.length)];
-}
-
-function roundFloat(x, d) {
-    if (d < 1) {
-        return x;
-    }
-    return Math.round(x * Math.pow(10, d)) / Math.pow(10, d);
-}
-
-function randint(a, b) {
-    return Math.floor(Math.random() * (b - a + 1) + a);
-}
-
-function randuni(a, b, d) {
-    return roundFloat((b-a) * Math.random() + a, d);
-}
-
 function parseVars(dict) {
     let copy = {};
     Object.assign(copy, dict);
@@ -73,44 +54,18 @@ function parseStats(string) {
     return string;
 }
 
-function parseSolution(string, dict) {
-    let copy = {};
-    for (let k in dict) {
-        let v = smartRound(dict[k]);
-        copy[k] = v;
+function parseMEval(string, dict) {
+    let mevalReg = /@meval\(.*?@\)/;
+    if (string.search(mevalReg) != -1) {
+        let expr = string.match(mevalReg)[0];
+        expr = expr.slice(7, expr.length-2)
+        let evaluated = math.evaluate(expr, dict);
+        return parseMEval(string.replace(mevalReg, evaluated), dict);
     }
-    return template(string, copy);
+    return string;
 }
 
-function smartRound(float) {
-    if (roundFloat(float, 10) % 1 == 0) {
-        return Math.round(float);
-    } else {
-        return roundFloat(float, 4);
-    }
-}
-
-function isClose(userAnswer, answer) {
-    if (answer == 0) {
-        return userAnswer < tol;
-    }
-    return Math.abs((userAnswer - answer) / answer) < tol;
-}
-
-function isCorrect(userAnswer, answer) {
-    if (userAnswer.includes("/")) { // parse fractions
-        var parts = userAnswer.split('/').map(c => Number(c));
-        if (parts.length != 2) {
-            return false;
-        }
-        if (isNaN(parts[0]) || isNaN(parts[1])) {
-            return false;
-        }
-        return isClose(parts[0]/parts[1], answer);
-    }
-    userAnswer = Number(userAnswer);
-    if (isNaN(userAnswer)) {
-        return false;
-    }
-    return isClose(userAnswer, answer)
+function parseText(string, dict) {
+    let subbed = template(string, dict);
+    return parseMEval(subbed, dict);
 }

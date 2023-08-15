@@ -2,7 +2,7 @@ function generateQuiz(questions, quizContainer, resultsContainer, solutionContai
     
     function parseQuestion(dict) {
         let parsed_vars = "vars" in dict ? parseVars(dict["vars"]) : {}; // turn variables with random values into numeric values
-        let parsed_prob = template(dict["prob"], parsed_vars); // substitute variables in the question for their generated values
+        let parsed_prob = parseText(dict["prob"], parsed_vars); // parse vars inside question
 
         let raw_ans = template(dict["answer"], parsed_vars); // substitute variables in the answer for their generated values
         raw_ans = parseStats(raw_ans); // parse distributions in question if they exist
@@ -10,7 +10,7 @@ function generateQuiz(questions, quizContainer, resultsContainer, solutionContai
         let answer = [raw_ans, smartRound(raw_ans)];
 
         let soln_dict = Object.assign({}, parsed_vars, {ans: answer[1]});
-        let parsed_soln = "solution" in dict ? parseSolution(dict["solution"], soln_dict) : "No solution attached!";
+        let parsed_soln = "solution" in dict ? parseText(dict["solution"], soln_dict) : "No solution attached!"; // parse vars inside answer
         return {
             question: parsed_prob,
             correctAnswers: answer,
