@@ -13,19 +13,25 @@ function parseVars(dict) {
     for (let k in copy) {
         let v = String(copy[k]);
         if (v.startsWith("randint")) {
-            let range = v.slice(8, v.length).split(',').map(item => template(item, progDict)).map(item => parseInt(item, 10));
+            let range = v.slice(8, v.length - 1).split(',').map(item => template(item, progDict)).map(item => parseMEval(item, progDict)).map(item => parseInt(item, 10));
             let randomInt = randint(...range);
             copy[k] = randomInt;
             progDict[k] = randomInt;
         }
         else if (v.startsWith("randuni")) {
-            let parts = v.slice(8, v.length).split(',').map(item => template(item, progDict));
+            let parts = v.slice(8, v.length - 1).split(',').map(item => template(item, progDict));
             let lower = parseFloat(parts[0]);
             let upper = parseFloat(parts[1]);
             let digits = parseInt(parts[2]);
             let randomUni = randuni(lower, upper, digits)
             copy[k] = randomUni;
             progDict[k] = randomUni;
+        }
+        else if (v.startsWith("randcint")) { // e.g. randcint([1,2,3])
+            let parts = v.slice(10, v.length - 2).split(',').map(item => template(item, progDict)).map(item => parseInt(item));
+            let randomInt = randomChoice(parts);
+            copy[k] = randomInt;
+            progDict[k] = randomInt;
         }
         else if (v.startsWith("meval")) {
             let expr = v.slice(6, v.length-1);
@@ -50,6 +56,22 @@ function parseStats(string) {
         let [mean, std, quantile] = toParse.split("(")[1].split(")")[0].split(",").map((x) => parseFloat(x));
         let parsed = jStat.normal.inv(quantile, mean, std);
         return parseStats(string.replace(qnormReg, parsed));
+    }
+    else if (string.search(dpoisReg) != -1) {
+        let toParse = string.match(dpoisReg)[0];
+        let [x, l] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseInt(x);
+        l = parseFloat(l);
+        let parsed = jStat.poisson.pdf(x, l);
+        return parseStats(string.replace(dpoisReg, parsed));
+    }
+    else if (string.search(ppoisReg) != -1) {
+        let toParse = string.match(ppoisReg)[0];
+        let [x, l] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseInt(x);
+        l = parseFloat(l);
+        let parsed = jStat.poisson.cdf(x, l);
+        return parseStats(string.replace(ppoisReg, parsed));
     }
     return string;
 }

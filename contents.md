@@ -11,4 +11,5 @@
 - Probability mass function and cumulative distribution function of discrete distributions
 - Expected value and variance of discrete distributions
 - Bivariate discrete distributions
+- Poisson probability questions
 - Moment generating functions for discrete distributions
