@@ -73,6 +73,33 @@ function parseStats(string) {
         let parsed = jStat.poisson.cdf(x, l);
         return parseStats(string.replace(ppoisReg, parsed));
     }
+    else if (string.search(pbinomReg) != -1) {
+        let toParse = string.match(pbinomReg)[0];
+        let [x, n, p] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseInt(x);
+        n = parseInt(n);
+        p = parseFloat(p);
+        let parsed = jStat.binomial.cdf(x, n, p);
+        return parseStats(string.replace(pbinomReg, parsed));
+    }
+    else if (string.search(dnbinomReg) != -1) {
+        let toParse = string.match(dnbinomReg)[0];
+        let [x, n, p] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseInt(x);
+        n = parseInt(n);
+        p = parseFloat(p);
+        let parsed = jStat.negbin.pdf(x, n, p);
+        return parseStats(string.replace(dnbinomReg, parsed));
+    }
+    else if (string.search(pnbinomReg) != -1) {
+        let toParse = string.match(pnbinomReg)[0];
+        let [x, n, p] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseInt(x);
+        n = parseInt(n);
+        p = parseFloat(p);
+        let parsed = jStat.negbin.cdf(x, n, p);
+        return parseStats(string.replace(pnbinomReg, parsed));
+    }
     return string;
 }
 

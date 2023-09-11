@@ -10,3 +10,6 @@ Created by Luke Peng
 
 ### 8/15/23 - 8/20/23
 - Added discrete distribution questions
+
+### 9/8/23 - 9/9/23
+- Added more discrete distribution questions (R-based)

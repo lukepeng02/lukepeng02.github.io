@@ -1,16 +1,19 @@
 var test_questions = [
     {
-        prob: "Let \\(f_\{X,Y\}(x,y)=\\frac1\{{e}\}({a}x+{b}y), x=1,2,\\ldots,{c}; y=1,2,\\ldots,{d}.\\) Find \\(Cov[X,Y]\\).",
-        answer: "(a*(2*c+1)+b*(2*d+1))*(c+1)*(d+1)/(6*(a*(c+1)+b*(d+1)))-((2*a*(2*c+1)+3*b*(d+1))*(c+1)/(6*(a*(c+1)+b*(d+1))))*((3*a*(c+1)+2*b*(2*d+1))*(d+1)/(6*(a*(c+1)+b*(d+1))))",
+        prob: "Suppose professional basketball player Shack shoots free throws until he makes {a}. If each shot has probability {b} of going in, what is the probability he will attempt no more than {d}? (R recommended)",
+        answer: "f",
         vars: {
-            "a": "randint(2,6)",
-            "b": "randint(2,6)",
-            "c": "randint(4,7)",
-            "d": "randint(4,7)",
-            "e": "meval(round((a*c*d*(c+1)+b*c*d*(d+1))/2,1))"
+            "a": "randint(10,15)",
+            "b": "randuni(0.25,0.4,2)",
+            "c": "meval(round(a/b))",
+            "d": "randint(@meval(c-5@),@meval(c+5@))",
+            "e": "meval(d-a)",
+            "f": "@pnbinom({e},{a},{b})"
         },
-        solution: "First compute \\(\\mathbb E[XY]=\\sum_x\\sum_yxy\\cdot f_\{X,Y\}(x,y).\\) Then compute \\(f_X(x)=\\sum_y f_\{X,Y\}(x,y)\\) and use this to find \\(\\mathbb E[X].\\) Similarly, compute \\(\\mathbb E[Y]\\). Lastly, we know " +
-            "\\(Cov[X,Y]=\\mathbb E[XY]-\\mathbb E[X]\\mathbb E[Y].\\)"
+        solution: "Let \\(F\\) be a random variable representing the number of free throws Shack will attempt. Then \\(F\\sim \\text\{NB\}({a},{b}).\\) We must find \\(P[F\\leq {d}]=F_F({d}),\\) which we can easily do in R: " +
+            "\\(\\texttt\{pnbinom({d}-{a},{a},{b}).\}\\) <b>Very</b> important: notice that the first argument is \\({d}-{a}\\), which is the number of failures rather than the number of trials. This is standard in R. If you do " +
+            "not like this, you can also solve this with the binomial cdf. The complement of the event is that Shack makes fewer than {a} free throws in his first {d} attempts. So if we let \\(G\\) be the number of free throws he makes " +
+            "in his first {d} attempts, then \\(G\\sim \\text\{Binom\}({d},{b}).\\) We must compute \\(1-P[G\\lt {a}]=1-F_G(@meval(a-1@)),\\) which we can do in R: \\(\\texttt\{1-pbinom(@meval(a-1@),{d},{b}).\}\\)"
     },
 ]
 

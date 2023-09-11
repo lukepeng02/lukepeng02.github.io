@@ -354,6 +354,46 @@ disc_dist_questions = [
         solution: "First compute \\(\\mathbb E[XY]=\\sum_x\\sum_yxy\\cdot f_\{X,Y\}(x,y).\\) Then compute \\(f_X(x)=\\sum_y f_\{X,Y\}(x,y)\\) and use this to find \\(\\mathbb E[X].\\) Similarly, compute \\(\\mathbb E[Y]\\). Lastly, we know " +
             "\\(Cov[X,Y]=\\mathbb E[XY]-\\mathbb E[X]\\mathbb E[Y].\\)"
     },
+    {
+        prob: "On a given day, suppose Professor Snape gives Harry detention with probability {a}. Find the probability he receives at most {b} in the next 30 days, assuming the chance for each day is independent. (R recommended)",
+        answer: "c",
+        vars: {
+            "a": "randuni(0.1,0.2,2)",
+            "b": "randint(3,6)",
+            "c": "@pbinom({b},30,{a})",
+        },
+        solution: "Let \\(H\\) be a random variable representing the number of detentions Harry receives from Professor Snape. Then \\(H\\sim \\text\{Binom\}(30,{a}).\\) We must find \\(P[H\\leq {b}]=F_H({b}),\\) which we can easily do in R: " +
+            "\\(\\texttt\{pbinom({b},30,{a}).\}\\)"
+    },
+    {
+        prob: "On a given day, suppose Professor Snape takes points from Gryffindor according to a Poisson process of {a} points per day. Find the probability he takes at least {b} points in five days. (R recommended)",
+        answer: "1-e",
+        vars: {
+            "a": "randint(10,15)",
+            "b": "randint(@meval(5*a-4@),@meval(5*a+4@))",
+            "c": "meval(5*a)",
+            "d": "meval(b-1)",
+            "e": "@ppois({d},{c})"
+        },
+        solution: "Let \\(S\\) be a random variable representing the number of points Professor Snape takes from Gryffindor in five days. Then \\(S\\sim \\text\{Poisson\}({c}).\\) We must find \\(P[S\\geq {b}]=1-P[S\\lt {b}]=1-F_S(@meval(b-1@)),\\) which we can easily do in R: " +
+            "\\(\\texttt\{1-ppois(@meval(b-1@),{c}).\}\\)"
+    },
+    {
+        prob: "Suppose professional basketball player Shack shoots free throws until he makes {a}. If each shot has probability {b} of going in, what is the probability he will attempt no more than {d}? (R recommended)",
+        answer: "f",
+        vars: {
+            "a": "randint(10,15)",
+            "b": "randuni(0.25,0.4,2)",
+            "c": "meval(round(a/b))",
+            "d": "randint(@meval(c-5@),@meval(c+5@))",
+            "e": "meval(d-a)",
+            "f": "@pnbinom({e},{a},{b})"
+        },
+        solution: "Let \\(F\\) be a random variable representing the number of free throws Shack will attempt. Then \\(F\\sim \\text\{NB\}({a},{b}).\\) We must find \\(P[F\\leq {d}]=F_F({d}),\\) which we can easily do in R: " +
+            "\\(\\texttt\{pnbinom({d}-{a},{a},{b}).\}\\) <b>Very</b> important: notice that the first argument is \\({d}-{a}\\), which is the number of failures rather than the number of trials. This is standard in R. If you do " +
+            "not like this, you can also solve this with the binomial cdf. The complement of the event is that Shack makes fewer than {a} free throws in his first {d} attempts. So if we let \\(G\\) be the number of free throws he makes " +
+            "in his first {d} attempts, then \\(G\\sim \\text\{Binom\}({d},{b}).\\) We must compute \\(1-P[G\\lt {a}]=1-F_G(@meval(a-1@)),\\) which we can do in R: \\(\\texttt\{1-pbinom(@meval(a-1@),{d},{b}).\}\\)"
+    },
 ];
 
 var ddistq_id = "ddist";
