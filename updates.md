@@ -13,3 +13,7 @@ Created by Luke Peng
 
 ### 9/8/23 - 9/9/23
 - Added more discrete distribution questions (R-based)
+
+### 9/13/23 - 9/14/23
+- Added continuous distribution questions
+- Added continuous distribution to contents.md

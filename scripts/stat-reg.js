@@ -8,3 +8,5 @@ let pbinomReg = /@pbinom\(.*?\)/; // binomial cdf: pbinom(x, n, p)
 
 let dnbinomReg = /@dnbinom\(.*?\)/; // negative binomial pmf: dnbinom(x, n, p)
 let pnbinomReg = /@pnbinom\(.*?\)/; // negative binomial cdf: pnbinom(x, n, p)
+
+let pgammaReg = /@pgamma\(.*?\)/; // gamma cdf: pgamma(x, alpha, theta)

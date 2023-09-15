@@ -100,6 +100,18 @@ function parseStats(string) {
         let parsed = jStat.negbin.cdf(x, n, p);
         return parseStats(string.replace(pnbinomReg, parsed));
     }
+    else if (string.search(pgammaReg) != -1) {
+        let toParse = string.match(pgammaReg)[0];
+        let [x, alpha, theta] = toParse.split("(")[1].split(")")[0].split(",");
+        x = parseFloat(x);
+        alpha = parseInt(alpha);
+        theta = parseFloat(theta);
+        console.log(x);
+        console.log(alpha);
+        console.log(theta);
+        let parsed = jStat.gamma.cdf(x, alpha, theta);
+        return parseStats(string.replace(pgammaReg, parsed));
+    }
     return string;
 }
 

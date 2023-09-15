@@ -13,3 +13,11 @@
 - Bivariate discrete distributions
 - Poisson probability questions
 - Moment generating functions for discrete distributions
+
+### Continuous Distributions
+- Exponential, gamma, normal, and non-standard continuous distributions
+- Probability density function and cumulative distribution function of continuous distributions
+- Expected value and variance of continuous distributions
+- Bivariate continuous distributions
+- Moment generating functions for continuous distributions
+- Quantiles of continuous distributions
