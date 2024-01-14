@@ -17,3 +17,10 @@ Created by Luke Peng
 ### 9/13/23 - 9/14/23
 - Added continuous distribution questions
 - Added continuous distribution to contents.md
+
+### 1/8/24 - 1/12/24
+- Added point estimation questions
+- Added confidence interval questions
+- Added hypothesis testing questions
+- Added point estimation, confidence interval, and hypothesis testing questions to contents.md
+- Added developer mode flag to easily switch between console logging/no console logging

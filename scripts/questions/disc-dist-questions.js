@@ -398,4 +398,6 @@ disc_dist_questions = [
 
 var ddistq_id = "ddist";
 qtype_to_var[ddistq_id] = disc_dist_questions;
-console.log(`Loaded ${disc_dist_questions.length} discrete distribution questions.`)
+if (devMode) {
+    console.log(`Loaded ${disc_dist_questions.length} discrete distribution questions.`)
+}
